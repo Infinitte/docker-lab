@@ -32,6 +32,20 @@ services:
     networks:
       - main_default
 
+  mosquitto:
+    image: eclipse-mosquitto
+    hostname: mosquitto
+    container_name: mosquitto
+    restart: unless-stopped
+    labels:
+      - traefik.enable=false
+    ports:
+      - "1883:1883"
+    volumes:
+      - /home/kabble/code/docker-lab/data/mosquitto:/mosquitto
+    networks:
+      - main_default
+
 secrets:
   db_password:
     file: /home/kabble/code/docker-lab/data/.secrets/mariadb/db_password.txt
