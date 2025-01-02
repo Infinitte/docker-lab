@@ -89,19 +89,19 @@ services:
       - main_default
     restart: unless-stopped
 
-  # watchtower:
-  #   image: containrrr/watchtower
-  #   container_name: watchtower
-  #   labels:
-  #     - traefik.enable=false
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   env_file:
-  #     - /opt/docker/.secrets/watchtower/container-vars.env
-  #   command: --label-enable
-  #   restart: unless-stopped
-  #   networks:
-  #     - main_default
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    labels:
+      - traefik.enable=false
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - /home/kabble/code/docker-lab/data/.secrets/watchtower/container-vars.env
+    command: --label-enable
+    restart: unless-stopped
+    networks:
+      - main_default
 
   authelia:
     image: authelia/authelia
