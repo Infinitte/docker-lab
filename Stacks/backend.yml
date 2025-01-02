@@ -12,6 +12,36 @@ services:
     networks:
       - main_default
 
+  mariadb:
+    image: mariadb:10.6
+    container_name: mariadb
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    volumes:
+      - /home/kabble/code/docker-lab/data/mariadb:/var/lib/mysql
+    labels:
+      - "traefik.enable=false"
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+    secrets:
+      - db_password
+      - db_root_password
+    networks:
+      - main_default
+
+secrets:
+  db_password:
+    file: /home/kabble/code/docker-lab/data/.secrets/mariadb/db_password.txt
+  db_root_password:
+    file: /home/kabble/code/docker-lab/data/.secrets/mariadb/db_root_password.txt
+  # telegram_token:
+  #   file: /opt/docker/.secrets/telegram/telegram_token.txt
+  # pihole_password:
+  #   file: /opt/docker/.secrets/pihole/password.tx
+
 networks:
   main_default:
     external: true
