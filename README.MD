@@ -2,5 +2,5 @@
 
 ```
 docker network create main_default
-docker compose -f portainer.yml up -d
+docker compose -f /home/kabble/code/docker-lab/Stacks/portainer.yml up -d
 ```
