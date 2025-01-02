@@ -1,0 +1,27 @@
+version: '3.0'
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer-ce
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.http.routers.portainer.entrypoints=websecure
+      - traefik.http.routers.portainer.rule=Host(`portainer.kabble.duckdns.org`)
+      - traefik.http.routers.portainer.tls=true
+      - traefik.http.routers.portainer.middlewares=authelia@docker
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/kabble/code/docker-lab/data/portainer:/data
+      - /home/kabble/code/docker-lab:/opt/docker
+    ports:
+      - 9000:9000
+    networks:
+      - main_default
+
+networks:
+  main_default:
+    external: true
