@@ -1,0 +1,15 @@
+version: "2.3"
+
+services:
+  redis:
+    image: docker.io/library/redis:7
+    container_name: redis
+    labels:
+      - "traefik.enable=false"
+    restart: unless-stopped
+    volumes:
+      - /home/kabble/code/docker-lab/data/redisdata:/data
+
+networks:
+  main_default:
+    external: true
