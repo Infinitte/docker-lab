@@ -9,6 +9,8 @@ services:
     restart: unless-stopped
     volumes:
       - /home/kabble/code/docker-lab/data/redisdata:/data
+    networks:
+      - main_default
 
 networks:
   main_default:
